@@ -87,12 +87,11 @@ function seedDefaultAdmin(db) {
   const existing = db.prepare('SELECT id FROM users WHERE username = ?').get('admin');
   if (!existing) {
     const bcrypt = require('bcryptjs');
-    const { v4: uuidv4 } = require('uuid');
     const hash = bcrypt.hashSync('admin', 10);
     db.prepare(`
       INSERT INTO users (id, username, password_hash, role, full_name)
       VALUES (?, 'admin', ?, 'admin', 'Administrateur TrackFlow')
-    `).run(uuidv4(), hash);
+    `).run(crypto.randomUUID(), hash);
   }
 }
 
