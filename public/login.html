@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TrackFlow - Connexion</title>
+  <link rel="stylesheet" href="/css/style.css">
+  <style>
+    .login-container { max-width: 400px; margin: 80px auto; padding: 2rem; }
+    .login-form { background: #fff; padding: 2rem; border-radius: 8px; box-shadow: 0 2px 12px rgba(0,0,0,0.1); }
+    .login-form h1 { text-align: center; color: #1a73e8; margin-bottom: 1.5rem; font-size: 1.5rem; }
+    .login-form label { display: block; margin-bottom: 0.3rem; font-weight: 600; color: #333; }
+    .login-form input { width: 100%; padding: 0.7rem; margin-bottom: 1rem; border: 1px solid #ddd; border-radius: 4px; box-sizing: border-box; font-size: 1rem; }
+    .login-form button { width: 100%; padding: 0.8rem; background: #1a73e8; color: #fff; border: none; border-radius: 4px; font-size: 1rem; cursor: pointer; }
+    .login-form button:hover { background: #1557b0; }
+    .error-msg { color: #d32f2f; text-align: center; margin-bottom: 1rem; display: none; }
+  </style>
+</head>
+<body>
+  <div class="login-container">
+    <form class="login-form" id="loginForm">
+      <h1>TrackFlow</h1>
+      <div class="error-msg" id="errorMsg"></div>
+      <label for="username">Nom d'utilisateur</label>
+      <input type="text" id="username" name="username" required autocomplete="username">
+      <label for="password">Mot de passe</label>
+      <input type="password" id="password" name="password" required autocomplete="current-password">
+      <button type="submit">Se connecter</button>
+    </form>
+  </div>
+  <script>
+    document.getElementById('loginForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const errorEl = document.getElementById('errorMsg');
+      errorEl.style.display = 'none';
+      const username = document.getElementById('username').value;
+      const password = document.getElementById('password').value;
+      try {
+        const res = await fetch('/api/auth/login', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ username, password }),
+        });
+        const data = await res.json();
+        if (!res.ok) {
+          errorEl.textContent = data.error || 'Erreur de connexion';
+          errorEl.style.display = 'block';
+          return;
+        }
+        localStorage.setItem('trackflow_token', data.token);
+        localStorage.setItem('trackflow_user', JSON.stringify(data.user));
+        const role = data.user.role;
+        window.location.href = role === 'operator' ? '/scan.html' : '/admin.html';
+      } catch (err) {
+        errorEl.textContent = 'Erreur réseau';
+        errorEl.style.display = 'block';
+      }
+    });
+    if (localStorage.getItem('trackflow_token')) {
+      window.location.href = '/admin.html';
+    }
+  </script>
+</body>
+</html>

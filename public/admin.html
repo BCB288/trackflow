@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TrackFlow - Gestion des colis</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <header>
+    <div class="container">
+      <h1>Track<span>Flow</span></h1>
+      <nav>
+        <a href="/">Suivi</a>
+        <a href="/scan.html">Scanner</a>
+        <a href="/admin.html">Gestion</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <div id="stats" class="stats"></div>
+
+    <div class="card">
+      <h3>Enregistrer un nouveau colis</h3>
+      <form onsubmit="createParcel(event)">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+          <div class="form-group">
+            <label>Nom expéditeur *</label>
+            <input type="text" name="senderName" required>
+          </div>
+          <div class="form-group">
+            <label>Tél. expéditeur</label>
+            <input type="tel" name="senderPhone">
+          </div>
+          <div class="form-group">
+            <label>Nom destinataire *</label>
+            <input type="text" name="recipientName" required>
+          </div>
+          <div class="form-group">
+            <label>Tél. destinataire *</label>
+            <input type="tel" name="recipientPhone" required>
+          </div>
+          <div class="form-group">
+            <label>Email destinataire</label>
+            <input type="email" name="recipientEmail">
+          </div>
+          <div class="form-group">
+            <label>Poids (kg)</label>
+            <input type="number" name="weightKg" step="0.1" min="0">
+          </div>
+          <div class="form-group">
+            <label>Origine *</label>
+            <input type="text" name="origin" required placeholder="Ex: Paris">
+          </div>
+          <div class="form-group">
+            <label>Destination *</label>
+            <input type="text" name="destination" required placeholder="Ex: Douala">
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Description</label>
+          <textarea name="description" rows="2" placeholder="Description du contenu (optionnel)"></textarea>
+        </div>
+        <button type="submit" class="btn" style="width:100%;">Créer le colis</button>
+      </form>
+      <div id="create-result" style="margin-top:16px;"></div>
+    </div>
+
+    <div class="card" style="margin-top:20px;">
+      <h3>Liste des colis</h3>
+      <div style="overflow-x:auto;">
+        <table style="width:100%;border-collapse:collapse;font-size:0.9rem;">
+          <thead>
+            <tr style="border-bottom:2px solid var(--gray-200);text-align:left;">
+              <th style="padding:10px 8px;">Code</th>
+              <th style="padding:10px 8px;">Destinataire</th>
+              <th style="padding:10px 8px;">Trajet</th>
+              <th style="padding:10px 8px;">Statut</th>
+              <th style="padding:10px 8px;">Date</th>
+            </tr>
+          </thead>
+          <tbody id="parcels-table"></tbody>
+        </table>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <p>TrackFlow &copy; 2026 - Système de suivi de colis intelligent</p>
+  </footer>
+
+  <script src="/js/admin.js"></script>
+</body>
+</html>

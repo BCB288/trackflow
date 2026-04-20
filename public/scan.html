@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TrackFlow - Scanner un colis</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <header>
+    <div class="container">
+      <h1>Track<span>Flow</span></h1>
+      <nav>
+        <a href="/">Suivi</a>
+        <a href="/scan.html">Scanner</a>
+        <a href="/admin.html">Gestion</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <div class="scan-page">
+      <div class="card">
+        <h3>Scanner un colis</h3>
+        <form onsubmit="submitScan(event)">
+          <div class="form-group">
+            <label for="trackingCode">Code de suivi *</label>
+            <input type="text" name="trackingCode" id="trackingCode" placeholder="TF-XXXXXXXX-XXXXXXXX" required>
+          </div>
+          <div class="form-group">
+            <label for="status">Nouveau statut *</label>
+            <select name="status" id="status" required>
+              <option value="">-- Sélectionner --</option>
+              <option value="picked_up">Collecté</option>
+              <option value="in_transit">En transit</option>
+              <option value="at_hub">Au hub</option>
+              <option value="out_for_delivery">En livraison</option>
+              <option value="arrived">Arrivé à destination</option>
+              <option value="delivered">Livré</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="location">Lieu du scan *</label>
+            <input type="text" name="location" id="location" placeholder="Ex: Hub Douala Centre" required>
+          </div>
+          <div class="form-group">
+            <label for="scannedBy">Scanné par</label>
+            <input type="text" name="scannedBy" id="scannedBy" placeholder="Nom de l'opérateur">
+          </div>
+          <div class="form-group">
+            <label for="notes">Notes</label>
+            <textarea name="notes" id="notes" rows="2" placeholder="Notes supplémentaires (optionnel)"></textarea>
+          </div>
+          <button type="submit" class="btn" style="width:100%;">Enregistrer le scan</button>
+        </form>
+      </div>
+      <div id="scan-result"></div>
+    </div>
+  </main>
+
+  <footer>
+    <p>TrackFlow &copy; 2026 - Système de suivi de colis intelligent</p>
+  </footer>
+
+  <script src="/js/scan.js"></script>
+</body>
+</html>

@@ -1,0 +1,32 @@
+version: '3.8'
+
+services:
+  trackflow:
+    build: .
+    container_name: trackflow-app
+    restart: unless-stopped
+    ports:
+      - "${PORT:-3000}:3000"
+    environment:
+      - NODE_ENV=production
+      - PORT=3000
+      - TRACKFLOW_DB_PATH=/app/data/trackflow.db
+      - JWT_SECRET=${JWT_SECRET:-change-this-in-production}
+      - JWT_EXPIRES_IN=${JWT_EXPIRES_IN:-24h}
+      - SMS_PROVIDER=${SMS_PROVIDER:-console}
+      - TWILIO_ACCOUNT_SID=${TWILIO_ACCOUNT_SID:-}
+      - TWILIO_AUTH_TOKEN=${TWILIO_AUTH_TOKEN:-}
+      - TWILIO_FROM_NUMBER=${TWILIO_FROM_NUMBER:-}
+      - SMS_MAX_RETRIES=${SMS_MAX_RETRIES:-2}
+    volumes:
+      - trackflow-data:/app/data
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://localhost:3000/health"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
+
+volumes:
+  trackflow-data:
+    driver: local

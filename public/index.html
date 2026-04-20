@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TrackFlow - Suivi de colis en temps réel</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <header>
+    <div class="container">
+      <h1>Track<span>Flow</span></h1>
+      <nav>
+        <a href="/">Suivi</a>
+        <a href="/scan.html">Scanner</a>
+        <a href="/admin.html">Gestion</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <div class="search-section">
+      <h2>Suivez votre colis</h2>
+      <p>Entrez votre numéro de suivi pour connaître l'état de votre colis en temps réel.</p>
+      <form class="search-form" onsubmit="searchParcel(event)">
+        <input type="text" id="tracking-input" placeholder="Ex: TF-XXXXXXXX-XXXXXXXX" autocomplete="off">
+        <button type="submit" class="btn">Rechercher</button>
+      </form>
+    </div>
+
+    <div id="tracking-result"></div>
+  </main>
+
+  <footer>
+    <p>TrackFlow &copy; 2026 - Système de suivi de colis intelligent</p>
+  </footer>
+
+  <script src="/js/tracking.js"></script>
+</body>
+</html>
